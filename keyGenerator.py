@@ -1,33 +1,45 @@
-from table import sbox
-from utils import convertCharToHex, leftRotate
+from utils import convertCharToHex, leftRotate, subbytesSbox, xor, generateRCon
 
-input = "TugasKriptoSCC18"
+input_keys = "TugasKriptoSCC18"
+
+# input_keys = input("Masukan kunci (16 karakter): ")
 
 def initRoundKey():
   arr = []
-  for i in range(len(input)):
+  for i in range(len(input_keys)):
     if (i % 4 == 0):
       column = []
       arr.append(column)
-    column.append(convertCharToHex(input[i]))
+    column.append(convertCharToHex(input_keys[i]))
   return arr
 
-# start round 0
-keys = initRoundKey()
+if (len(input_keys) > 16):
+  print("Kunci max 16 karakter")
+  keys = []
+else:
+  n = len(input_keys)
+  if (n < 16):
+    for i in range(16 - n):
+      input_keys += '_'
+      
 
-# start round 1 - 10
+  print(input_keys)
+  # start round 0
+  keys = initRoundKey()
 
-for i in range(10):
-  column = []
-  if (i == 0):
-    column = leftRotate(keys[3], 1)
-    keys.append(column)
-  else:
-    print(i)
-
-
-print(sbox[43])
-
-
-# print(bin(int(hexInput[0][0], 0))[2:].zfill(8))
-# print(hexInput)
+  # start round 1 - 10
+  w = 3
+  for i in range(10):
+    for j in range(4):
+      column = []
+      if (j == 0):
+        column = leftRotate(keys[w].copy(), 1)
+        column = subbytesSbox(column)
+        column = xor(column, generateRCon(i + 1))
+        column = xor(column, keys[w - 3])
+        keys.append(column)
+      else:
+        column = keys[w].copy()
+        column = xor(column, keys[w - 3])
+        keys.append(column)
+      w += 1
