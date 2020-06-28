@@ -140,10 +140,3 @@ def galoisMult(a, b):
           a ^= 0x1b
       b >>= 1
   return p % 256
-
-
-# print(hex(galoisMult(0xf0, 2) ^ galoisMult(0x36, 3) ^ galoisMult(0xc5, 1) ^ galoisMult(0x63, 1)))
-# print(hex(galoisMult(0xf0, 1) ^ galoisMult(0x36, 2) ^ galoisMult(0xc5, 3) ^ galoisMult(0x63, 1)))
-
-
-
