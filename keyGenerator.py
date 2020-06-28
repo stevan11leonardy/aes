@@ -23,7 +23,6 @@ else:
       input_keys += '_'
       
 
-  print(input_keys)
   # start round 0
   keys = initRoundKey()
 
