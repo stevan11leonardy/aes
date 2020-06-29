@@ -74,4 +74,4 @@ for i in range(4):
   for j in range(4):
     r.append(convertHexToChar(plain_text[i][j]))
   
-print('cipher text: ' + ''.join(r))
+print('plain text: ' + ''.join(r))
